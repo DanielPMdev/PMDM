@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="green01">#52C909</color>
+    <color name="green02">#9EEF6E</color>
+    <color name="gray01">#B0BEC5</color> <!-- Gris suave (para el borde) -->
+    <color name="orange01">#FFA726</color> <!-- Naranja suave (pastel) -->
+    <color name="orange02">#FB8C00</color> <!-- Naranja más oscuro (intenso) -->
+    <color name="gray02">#CFD8DC</color> <!-- Gris claro (para estado deshabilitado) -->
+    <color name="gray03">#607D8B</color> <!-- Gris oscuro (para el borde deshabilitado) -->
+
+</resources>

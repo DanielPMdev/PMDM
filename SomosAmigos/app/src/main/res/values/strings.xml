@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SomosAmigos</string>
+    <string name="number01">Introduce el Número 1</string>
+    <string name="number02">Introduce el Número 2</string>
+    <string name="somosAmigos">¿SOMOS AMIGOS?</string>
+    <string name="amigosTrue">son números amigos</string>
+    <string name="amigosFalse">NO son números amigos</string>
+    <string name="limpiar">Limpiar Formulario</string>
+</resources>
