@@ -35,7 +35,3 @@ Este repositorio incluirá:
 ## Contribuciones
 
 Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un *issue* o envía un *pull request* con tus sugerencias o mejoras.
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Para más detalles, consulta el archivo [LICENSE](LICENSE).
