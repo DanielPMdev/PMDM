@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ChessClock</string>
+    <string name="player01">Jugador 01</string>
+    <string name="player02">Jugador 02</string>
+    <string name="pauseButton">Pausar el tiempo</string>
+    <string name="timerButton">Cambiar el tiempo</string>
+    <string name="reloadButton">Reiniciar el tiempo</string>
+    <string name="movesTxt">Movimientos: </string>
+</resources>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/txvPlayer01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:fontFamily="@font/oldtimer"
+        android:rotation="180"
+        android:text="@string/movesTxt"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.35000002" />
+
+    <android.widget.Button
+        android:id="@+id/player01"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btstyle01"
+        android:fontFamily="@font/oldtimer"
+        android:rotation="180"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/lyOpciones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/player01" />
+
+    <TextView
+        android:id="@+id/txvPlayer02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:fontFamily="@font/oldtimer"
+        android:text="@string/movesTxt"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.65" />
+
+    <android.widget.Button
+        android:id="@+id/player02"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btstyle01"
+        android:fontFamily="@font/oldtimer"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="38sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyOpciones"
+        tools:text="@string/player02" />
+
+    <LinearLayout
+        android:id="@+id/lyOpciones"
+        android:layout_width="0dp"
+        android:layout_height="87dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/player02"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player01">
+
+        <ImageButton
+            android:id="@+id/timerButton"
+            android:layout_width="87dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:background="@color/white"
+            android:contentDescription="@string/timerButton"
+            app:srcCompat="@drawable/timer" />
+
+        <ImageButton
+            android:id="@+id/pauseButton"
+            android:layout_width="87dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:background="@color/white"
+            android:contentDescription="@string/pauseButton"
+            app:srcCompat="@drawable/play" />
+
+        <ImageButton
+            android:id="@+id/reloadButton"
+            android:layout_width="87dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="24dp"
+            android:background="@color/white"
+            android:contentDescription="@string/reloadButton"
+            app:srcCompat="@drawable/reload" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
