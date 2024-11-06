@@ -5,10 +5,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -34,9 +32,9 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
     private lateinit var btPause: ImageButton
 
     private var resetear = false
-    private var pulsadoPause = false //False para sin iniciar, true para iniciado
-    private var jugadorActivo = 1
-    private var primerMovimiento = true
+    private var pulsadoPause = false //Boton play = false | boton pause = true
+    private var jugadorActivo = 1 //Que jugador esta activo??
+    private var primerMovimiento = true //Valorar si es el primer movimiento
 
     /**
      * Método llamado cuando se crea la actividad.
@@ -98,46 +96,25 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
             is Button -> {
                 when (view?.id) {
                     R.id.player01 -> {
-                        btPause.setImageResource(R.drawable.pause)
-                        pulsadoPause = true
-
-                        //Contador
-                        if(!primerMovimiento && jugadorActivo == 1){
-                            contadorPlayer01++
-                            txMoves01.text = getString(R.string.movesTxt) + " " + contadorPlayer01
-                        }
-                        primerMovimiento = false
-                        jugadorActivo = 2
-
-                        if (player1Timer.isRunning()) { // Si el temporizador del Jugador 1 está corriendo
-                            player1Timer.togglePause()  // Pausar el temporizador del Jugador 1
-                        }
-                        player1Button.isEnabled = false; // Desabilitamos el boton 1
-                        player2Button.isEnabled = true; // Habilitamos el boton 2
-                        player2Timer.togglePause() // Reanudar el temporizador del Jugador 2
-
+                        funcionamientoJugadores(
+                            jugadorActivo = 1,
+                            txMoves = txMoves01,
+                            timerActivo = player1Timer,
+                            timerPausado = player2Timer,
+                            botonActivo = player1Button,
+                            botonPausado = player2Button
+                        )
                     }
 
                     R.id.player02 -> {
-                        btPause.setImageResource(R.drawable.pause)
-                        pulsadoPause = true
-
-                        //Contador
-                        if(!primerMovimiento  && jugadorActivo == 2){
-                            contadorPlayer02++
-                            txMoves02.text = getString(R.string.movesTxt) + " " + contadorPlayer02
-                        }
-                        primerMovimiento = false
-                        jugadorActivo = 1
-
-                        if (player2Timer.isRunning()) { // Si el temporizador del Jugador 2 está corriendo
-                            player2Timer.togglePause()  // Pausar el temporizador del Jugador 2
-                        }
-                        player2Button.isEnabled = false; // Desabilitamos el boton 2
-                        player1Button.isEnabled = true; // Habilitamos el boton 2
-                        player1Timer.togglePause() // Reanudar el temporizador del Jugador 1
-
-
+                        funcionamientoJugadores(
+                            jugadorActivo = 2,
+                            txMoves = txMoves02,
+                            timerActivo = player2Timer,
+                            timerPausado = player1Timer,
+                            botonActivo = player2Button,
+                            botonPausado = player1Button
+                        )
                     }
                 }
             }
@@ -149,9 +126,12 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
                     }
 
                     R.id.pauseButton -> {
+                        //Si esta el icono de play
                         if (!pulsadoPause) {
+                            // Cambia el icono del botón a pausa y marca que está en estado de pausa
                             btPause.setImageResource(R.drawable.pause)
                             pulsadoPause = true
+
                             //Iniciar de Primeras el Boton de Arriba
                             if (jugadorActivo == 1) {
                                 player1Timer.togglePause()
@@ -160,7 +140,8 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
                                 player2Timer.togglePause()
                                 player1Button.isEnabled = false
                             }
-                        } else {
+                        } else { //Si esta el icono de pause
+                            // Cambia el icono del botón a play y llama a la función pausarBotones para detener los temporizadores
                             btPause.setImageResource(R.drawable.play)
                             pausarBotones()
                             pulsadoPause = false
@@ -200,13 +181,6 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
     override fun onResult(result: Int) { //DEL TIEMPO
         tiempo = result
         avisoReset()
-
-        /*pausarBotones()
-        val tiempoFormateado = Ayudante.formatearTiempo(tiempo)
-        player1Timer.setTiempo(tiempo)
-        player1Button.text = tiempoFormateado
-        player2Timer.setTiempo(tiempo)
-        player2Button.text = tiempoFormateado*/
     }
 
     /**
@@ -222,12 +196,7 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
             //Parar los Botones
             pausarBotones()
 
-            //Formatear el Tiempo
-            val tiempoFormateado = Ayudante.formatearTiempo(tiempo)
-            player1Timer.setTiempo(tiempo)
-            player1Button.text = tiempoFormateado
-            player2Timer.setTiempo(tiempo)
-            player2Button.text = tiempoFormateado
+            formatearTiempo()
 
             //Caso que el tiempo haya acabado
             if (!player2Button.isEnabled && !player1Button.isEnabled) {
@@ -238,19 +207,21 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
                 player2Button.setBackgroundResource(R.drawable.btstyle01)
             }
 
-            //Resetear Contadores
-            contadorPlayer01 = 0
-            contadorPlayer02 = 0
-            txMoves01.text = getString(R.string.movesTxt) + " " + contadorPlayer01
-            txMoves02.text = getString(R.string.movesTxt) + " " + contadorPlayer02
+            resetearContadores()
 
             //Poner el boton de pausa con el icono del play
             btPause.setImageResource(R.drawable.play)
+            btPause.isEnabled = true
             pulsadoPause = false
             primerMovimiento = true
         }
     }
 
+    /**
+     * Pausa los temporizadores de los jugadores y activa el botón correspondiente.
+     * Si el temporizador del jugador 1 está corriendo, lo pausa y habilita el botón del jugador 2.
+     * Si el temporizador del jugador 2 está corriendo, lo pausa y habilita el botón del jugador 1.
+     */
     private fun pausarBotones() {
         if (player1Timer.isRunning()) { //Si el timer del jugador 1 esta corriendo
             jugadorActivo = 1
@@ -263,4 +234,86 @@ class MainActivity : AppCompatActivity(), OnDialogResultListener, View.OnClickLi
             player1Button.isEnabled = true;
         }
     }
+
+    /**
+     * Resetea los contadores de movimientos de ambos jugadores a 0.
+     * También actualiza los textos de los TextViews que muestran el número de movimientos.
+     */
+    private fun resetearContadores(){
+        //Resetear Contadores
+        contadorPlayer01 = 0
+        contadorPlayer02 = 0
+        txMoves01.text = getString(R.string.movesTxt) + " " + contadorPlayer01
+        txMoves02.text = getString(R.string.movesTxt) + " " + contadorPlayer02
+    }
+
+    /**
+     * Formatea el tiempo para mostrarlo en los botones de ambos jugadores.
+     * Usa la clase Ayudante para convertir el tiempo en un formato legible y luego actualiza
+     * tanto los temporizadores como el texto de los botones con el tiempo formateado.
+     */
+    private fun formatearTiempo(){
+        //Formatear el Tiempo
+        val tiempoFormateado = Ayudante.formatearTiempo(tiempo)
+        player1Timer.setTiempo(tiempo)
+        player1Button.text = tiempoFormateado
+        player2Timer.setTiempo(tiempo)
+        player2Button.text = tiempoFormateado
+    }
+
+    /**
+     * Gestiona el funcionamiento de los jugadores, controlando los contadores, temporizadores y botones
+     * de acuerdo con el jugador activo actual.
+     *
+     * @param jugadorActivo El jugador que está realizando la acción (1 para jugador 1, 2 para jugador 2).
+     * @param txMoves El TextView que muestra el número de movimientos del jugador.
+     * @param timerActivo El temporizador del jugador que está actualmente en turno.
+     * @param timerPausado El temporizador del jugador que está en pausa.
+     * @param botonActivo El botón del jugador que está en turno y que se deshabilitará.
+     * @param botonPausado El botón del jugador que está en pausa y que se habilitará.
+     */
+    private fun funcionamientoJugadores(
+        jugadorActivo: Int,
+        txMoves: TextView,
+        timerActivo: ChessTimer,
+        timerPausado: ChessTimer,
+        botonActivo: Button,
+        botonPausado: Button
+    ) {
+        // Actualiza el icono de pausa y marca que el botón de pausa ha sido pulsado
+        btPause.setImageResource(R.drawable.pause)
+        pulsadoPause = true
+
+        // Incrementa el contador de movimientos del jugador activo si no es el primer movimiento
+        if (!primerMovimiento && this.jugadorActivo == jugadorActivo) {
+            if (jugadorActivo == 1) {
+                contadorPlayer01++ // Incrementa el contador del jugador 1
+                txMoves.text = getString(R.string.movesTxt) + " " + contadorPlayer01
+            } else {
+                contadorPlayer02++ // Incrementa el contador del jugador 2
+                txMoves.text = getString(R.string.movesTxt) + " " + contadorPlayer02
+            }
+        }
+
+        // Marca que ya no es el primer movimiento
+        primerMovimiento = false
+
+        // Cambia el jugador activo al siguiente (de 1 a 2, o de 2 a 1)
+        this.jugadorActivo = if (jugadorActivo == 1)
+            2 else 1
+
+        // Pausa el temporizador del jugador activo y reanuda el temporizador del jugador en pausa
+        if (timerActivo.isRunning()) {
+            timerActivo.togglePause()  // Pausa el temporizador del jugador activo
+        }
+
+        // Deshabilita el botón del jugador activo y habilita el botón del jugador pausado
+        botonActivo.isEnabled = false
+        botonPausado.isEnabled = true
+
+        // Reanuda el temporizador del jugador pausado
+        timerPausado.togglePause()
+    }
 }
+
+
