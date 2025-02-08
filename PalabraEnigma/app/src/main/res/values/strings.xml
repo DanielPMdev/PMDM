@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">PalabraEnigma</string>
+    <string name="double_points_description">Activar doble puntuación </string>
+    <string name="more_time_description">Añade más tiempo a el actual </string>
+    <string name="unlock_letter_description">Desbloquea una letra </string>
+    <string name="titulo">Que palabras puedes formar con estas letras:</string>
+    <string name="btComprobar">Validar</string>
+    <string name="puntos">Puntos: </string>
+    <string name="intentos"> Intentos: </string>
+    <string name="nivel"> Experiencia: </string>
+</resources>

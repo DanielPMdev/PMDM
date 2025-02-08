@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemDificultad"
+        android:title="Dificultad">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/itemFacil"
+                    android:title="Fácil"
+                    android:orderInCategory="1"/>
+                <item
+                    android:id="@+id/itemMedio"
+                    android:title="Medio"
+                    android:orderInCategory="2"/>
+                <item
+                    android:id="@+id/itemDificil"
+                    android:title="Difícil"
+                    android:orderInCategory="3"/>
+            </group>
+        </menu>
+    </item>
+    <item
+        android:id="@+id/itemInstrucciones"
+        android:title="Instrucciones" />
+
+</menu>

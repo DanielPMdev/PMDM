@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="azul_iconos">#A4C2F7</color>
+    <color name="botones">#E6ECFC</color>
+    <color name="botonesPresionado">#B0C4DE</color> <!-- Color más oscuro para estado presionado -->
+    <color name="botonesDeshabilitado">#D3D3D3</color> <!-- Color gris para estado deshabilitado -->
+    <color name="botonesBorde">#9FB6CD</color> <!-- Color del borde -->
+    <color name="black_app">#000000</color>
+    <color name="texto_app">#29339B</color>
+    <color name="texto_app_v2">#087E8B</color>
+    <color name="avisos_app">#FF3A20</color>
+    <color name="avisos_app_v2">#E3170A</color>
+</resources>
